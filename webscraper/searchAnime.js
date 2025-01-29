@@ -41,4 +41,3 @@ export default async function searchAnime(keyword='') {
   }
 }
 
-console.log(await searchAnime("solo"));
