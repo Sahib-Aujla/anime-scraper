@@ -1,4 +1,4 @@
-import searchAnime from "../../webscraper/searchAnime";
+import searchAnime from "../../webscraper/searchAnime.js";
 
 
 export default async function(req,res){
