@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const base_url = process.env.BASE_URL;
 
-async function getRecentReleases(page = "1") {
+export async function getRecentReleases(page = "1") {
   try {
     const res = [];
     const response = await axios.get(`${base_url}/home.html?page=${page}`);
@@ -40,4 +40,5 @@ async function getRecentReleases(page = "1") {
   }
 }
 
-getAnimeData();
+
+console.log(await getRecentReleases('2'));
