@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const base_url = process.env.BASE_URL;
 
-export async function searchAnime(keyword) {
+export default async function searchAnime(keyword) {
   try {
     const res = [];
 
