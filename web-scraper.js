@@ -5,9 +5,10 @@ import dotenv from "dotenv";
 dotenv.config();
 const base_url = process.env.BASE_URL;
 
-async function getRecentReleases() {
+async function getRecentReleases(page = "1") {
   try {
-    const response = await axios.get(`${base_url}/home.html?page=3`);
+    const res = [];
+    const response = await axios.get(`${base_url}/home.html?page=${page}`);
     const $ = cheerio.load(response.data);
 
     const items = $("div.last_episodes.loaddub ul.items li");
@@ -25,7 +26,7 @@ async function getRecentReleases() {
 
       const episode = $el.find("p.episode").text().trim();
 
-      console.log({
+      res.push({
         link,
         title,
         image,
@@ -33,6 +34,7 @@ async function getRecentReleases() {
         episode,
       });
     });
+    return res;
   } catch (error) {
     console.error("Error fetching or parsing data:", error);
   }
