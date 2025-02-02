@@ -158,5 +158,3 @@ export async function getAnimeListByGenre(genre) {
     return [];
   }
 }
-
-console.log(await getAnimeListByGenre("action"));
