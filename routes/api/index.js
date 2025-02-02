@@ -4,6 +4,7 @@ import getSearchAnime from "./getSearchAnime.js";
 import getAnimeDetails from "./getAnimeDetails.js";
 import getEpisodeInfo from "./getEpisodeInfo.js";
 import getGenresList from "./getGenreList.js";
+import getAnimeByGenre from "./getAnimeByGenre.js";
 
 const router = express.Router();
 
@@ -16,5 +17,7 @@ router.get("/get/:id", getAnimeDetails);
 router.get("/get/episode/:id", getEpisodeInfo);
 
 router.get('/get/genre',getGenresList);
+
+router.get('/get/genre/:id',getAnimeByGenre);
 
 export default router;
