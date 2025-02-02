@@ -10,5 +10,6 @@ router.get("/recent-releases", getLatestAnime);
 router.get("/search", getSearchAnime);
 
 router.get("/get/:id", getAnimeDetails);
+router.get('/get/episode/:id');
 
 export default router;
