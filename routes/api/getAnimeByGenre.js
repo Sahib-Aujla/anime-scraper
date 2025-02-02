@@ -1,4 +1,4 @@
-import { getAnimeListByGenre } from "../../webscraper/getGenre";
+import { getAnimeListByGenre } from "../../webscraper/getGenre.js";
 
 export default async function getAnimeByGenre(req, res) {
   try {
