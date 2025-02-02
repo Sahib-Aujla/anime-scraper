@@ -5,7 +5,7 @@ dotenv.config();
 
 const base_url = process.env.BASE_URL;
 
-async function scrapeAnimeEpisodePage(episodeTag) {
+export default async function getAnimeEpisodeInfo(episodeTag) {
   let browser;
   try {
     browser = await puppeteer.launch({
@@ -99,8 +99,8 @@ async function scrapeAnimeEpisodePage(episodeTag) {
   }
 }
 
-console.log(
-  await scrapeAnimeEpisodePage(
-    "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su-2nd-season-episode-6"
-  )
-);
+// console.log(
+//   await scrapeAnimeEpisodePage(
+//     "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su-2nd-season-episode-6"
+//   )
+// );
