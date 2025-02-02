@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const base_url = process.env.BASE_URL;
 
-export async function getAnimeDetailsPuppeteer(animeName) {
+export default async function getAnimeDetails(animeName) {
   let browser;
   try {
     browser = await puppeteer.launch({
