@@ -91,3 +91,11 @@ const genres = {
   "Work Life": "/genre/work-life",
   Workplace: "/genre/workplace",
 };
+
+export async function getGenreList() {
+  return Object.keys(genres);
+}
+
+export async function getGenreLink(name) {
+  return genres[name];
+}
