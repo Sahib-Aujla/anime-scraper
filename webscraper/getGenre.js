@@ -1,101 +1,162 @@
+import * as cheerio from "cheerio";
+import dotenv from "dotenv";
+import axios from "axios";
+dotenv.config();
 const genres = {
-  Action: "/genre/action",
-  "Adult Cast": "/genre/adult-cast",
-  Adventure: "/genre/adventure",
-  Anthropomorphic: "/genre/anthropomorphic",
-  "Avant Garde": "/genre/avant-garde",
-  "Award Winning": "/genre/award-winning",
-  Cars: "/genre/cars",
-  CGDCT: "/genre/cgdct",
-  Childcare: "/genre/childcare",
-  "Combat Sports": "/genre/combat-sports",
-  Comedy: "/genre/comedy",
-  Comic: "/genre/comic",
-  Crime: "/genre/crime",
-  Cultivation: "/genre/cultivation",
-  Delinquents: "/genre/delinquents",
-  Dementia: "/genre/dementia",
-  Demons: "/genre/demons",
-  Detective: "/genre/detective",
-  Drama: "/genre/drama",
-  Dub: "/genre/dub",
-  Ecchi: "/genre/ecchi",
-  Educational: "/genre/educational",
-  Erotica: "/genre/erotica",
-  Family: "/genre/family",
-  Fantasy: "/genre/fantasy",
-  "Gag Humor": "/genre/gag-humor",
-  Game: "/genre/game",
-  "Gender Bender": "/genre/gender-bender",
-  Gore: "/genre/gore",
-  Gourmet: "/genre/gourmet",
-  Harem: "/genre/harem",
-  Hentai: "/genre/hentai",
-  "High Stakes Game": "/genre/high-stakes-game",
-  Historical: "/genre/historical",
-  Horror: "/genre/horror",
-  "Idols (Female)": "/genre/idols-female",
-  Isekai: "/genre/isekai",
-  Iyashikei: "/genre/iyashikei",
-  Josei: "/genre/josei",
-  Kids: "/genre/kids",
-  "Love Polygon": "/genre/love-polygon",
-  Magic: "/genre/magic",
-  "Magical Sex Shift": "/genre/magical-sex-shift",
-  "Mahou Shoujo": "/genre/mahou-shoujo",
-  "Martial Arts": "/genre/martial-arts",
-  Mecha: "/genre/mecha",
-  Medical: "/genre/medical",
-  Military: "/genre/military",
-  Music: "/genre/music",
-  Mystery: "/genre/mystery",
-  Mythology: "/genre/mythology",
-  "Organized Crime": "/genre/organized-crime",
-  "Otaku Culture": "/genre/otaku-culture",
-  Parody: "/genre/parody",
-  "Performing Arts": "/genre/performing-arts",
-  Pets: "/genre/pets",
-  Police: "/genre/police",
-  Psychological: "/genre/psychological",
-  Racing: "/genre/racing",
-  Reincarnation: "/genre/reincarnation",
-  "Reverse Harem": "/genre/reverse-harem",
-  Romance: "/genre/romance",
-  "Romantic Subtext": "/genre/romantic-subtext",
-  Samurai: "/genre/samurai",
-  School: "/genre/school",
-  "Sci-Fi": "/genre/sci-fi",
-  Seinen: "/genre/seinen",
-  Shoujo: "/genre/shoujo",
-  "Shoujo Ai": "/genre/shoujo-ai",
-  Shounen: "/genre/shounen",
-  Showbiz: "/genre/showbiz",
-  "Slice of Life": "/genre/slice-of-life",
-  Space: "/genre/space",
-  Sports: "/genre/sports",
-  "Strategy Game": "/genre/strategy-game",
-  "Strong Male Lead": "/genre/strong-male-lead",
-  "Super Power": "/genre/super-power",
-  Supernatural: "/genre/supernatural",
-  Survival: "/genre/survival",
-  Suspense: "/genre/suspense",
-  System: "/genre/system",
-  "Team Sports": "/genre/team-sports",
-  Thriller: "/genre/thriller",
-  "Time Travel": "/genre/time-travel",
-  "Urban Fantasy": "/genre/urban-fantasy",
-  Vampire: "/genre/vampire",
-  "Video Game": "/genre/video-game",
-  Villain: "/genre/villain",
-  "Visual Arts": "/genre/visual-arts",
-  "Work Life": "/genre/work-life",
-  Workplace: "/genre/workplace",
+  Action: "action",
+  "Adult Cast": "adult-cast",
+  Adventure: "adventure",
+  Anthropomorphic: "anthropomorphic",
+  "Avant Garde": "avant-garde",
+  "Award Winning": "award-winning",
+  Cars: "cars",
+  CGDCT: "cgdct",
+  Childcare: "childcare",
+  "Combat Sports": "combat-sports",
+  Comedy: "comedy",
+  Comic: "comic",
+  Crime: "crime",
+  Cultivation: "cultivation",
+  Delinquents: "delinquents",
+  Dementia: "dementia",
+  Demons: "demons",
+  Detective: "detective",
+  Drama: "drama",
+  Dub: "dub",
+  Ecchi: "ecchi",
+  Educational: "educational",
+  Erotica: "erotica",
+  Family: "family",
+  Fantasy: "fantasy",
+  "Gag Humor": "gag-humor",
+  Game: "game",
+  "Gender Bender": "gender-bender",
+  Gore: "gore",
+  Gourmet: "gourmet",
+  Harem: "harem",
+  Hentai: "hentai",
+  "High Stakes Game": "high-stakes-game",
+  Historical: "historical",
+  Horror: "horror",
+  "Idols (Female)": "idols-female",
+  Isekai: "isekai",
+  Iyashikei: "iyashikei",
+  Josei: "josei",
+  Kids: "kids",
+  "Love Polygon": "love-polygon",
+  Magic: "magic",
+  "Magical Sex Shift": "magical-sex-shift",
+  "Mahou Shoujo": "mahou-shoujo",
+  "Martial Arts": "martial-arts",
+  Mecha: "mecha",
+  Medical: "medical",
+  Military: "military",
+  Music: "music",
+  Mystery: "mystery",
+  Mythology: "mythology",
+  "Organized Crime": "organized-crime",
+  "Otaku Culture": "otaku-culture",
+  Parody: "parody",
+  "Performing Arts": "performing-arts",
+  Pets: "pets",
+  Police: "police",
+  Psychological: "psychological",
+  Racing: "racing",
+  Reincarnation: "reincarnation",
+  "Reverse Harem": "reverse-harem",
+  Romance: "romance",
+  "Romantic Subtext": "romantic-subtext",
+  Samurai: "samurai",
+  School: "school",
+  "Sci-Fi": "sci-fi",
+  Seinen: "seinen",
+  Shoujo: "shoujo",
+  "Shoujo Ai": "shoujo-ai",
+  Shounen: "shounen",
+  Showbiz: "showbiz",
+  "Slice of Life": "slice-of-life",
+  Space: "space",
+  Sports: "sports",
+  "Strategy Game": "strategy-game",
+  "Strong Male Lead": "strong-male-lead",
+  "Super Power": "super-power",
+  Supernatural: "supernatural",
+  Survival: "survival",
+  Suspense: "suspense",
+  System: "system",
+  "Team Sports": "team-sports",
+  Thriller: "thriller",
+  "Time Travel": "time-travel",
+  "Urban Fantasy": "urban-fantasy",
+  Vampire: "vampire",
+  "Video Game": "video-game",
+  Villain: "villain",
+  "Visual Arts": "visual-arts",
+  "Work Life": "work-life",
+  Workplace: "workplace",
 };
 
-export async function getGenreList() {
+export function getGenreList() {
   return Object.keys(genres);
 }
 
-export async function getGenreLink(name) {
-  return genres[name];
+export function getGenreLink(name) {
+  if (genres[name]) {
+    return genres[name];
+  }
+
+  for (const [genreKey, genreValue] of Object.entries(genres)) {
+    if (genreValue === name) {
+      return genreValue;
+    }
+  }
+
+  return null;
 }
+
+const base_url = process.env.BASE_URL;
+export async function getAnimeListByGenre(genre) {
+  try {
+    // 1) Get the genre link from the dictionary
+    const genrePath = getGenreLink(genre);
+    if (!genrePath) {
+      throw new Error(`Invalid genre: ${genre}, ${genrePath}`);
+    }
+
+    // 2) Fetch the page
+    const url = `${base_url}/genre/${genrePath}`;
+    const response = await axios.get(url);
+
+    // 3) Load HTML into Cheerio
+    const $ = cheerio.load(response.data);
+
+    // 4) Parse the anime list in `.last_episodes ul.items li`
+    const results = [];
+    $(".last_episodes ul.items li").each((_, el) => {
+      // The clickable link & image are inside ".img a"
+      const $linkTag = $(el).find(".img a");
+      const animeHref = $linkTag.attr("href") || "";
+      const animeTitle = $linkTag.attr("title") || "";
+      const animeImage = $linkTag.find("img").attr("src") || "";
+
+      // The release year is in <p class="released">Released: 2024</p>
+      let releasedText = $(el).find("p.released").text().trim();
+      // Strip out "Released: " if present
+      releasedText = releasedText.replace(/Released:\s*/i, "").trim();
+
+      results.push({
+        title: animeTitle,
+        link: animeHref,
+        image: animeImage,
+        released: releasedText,
+      });
+    });
+
+    return results;
+  } catch (error) {
+    console.error("Error fetching anime by genre:", error);
+    return [];
+  }
+}
+
+console.log(await getAnimeListByGenre("action"));
