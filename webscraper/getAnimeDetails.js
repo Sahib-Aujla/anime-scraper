@@ -115,8 +115,8 @@ export default async function getAnimeDetails(animeName) {
 
 // Test call
 
-console.log(
-  await getAnimeDetailsPuppeteer(
-    "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su"
-  )
-);
+// console.log(
+//   await getAnimeDetailsPuppeteer(
+//     "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su"
+//   )
+// );
