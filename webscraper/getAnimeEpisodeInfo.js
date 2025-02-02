@@ -44,7 +44,6 @@ export default async function getAnimeEpisodeInfo(episodeTag) {
       const $li = $(el);
       const $link = $li.find("a");
 
-     
       const serverName = $link
         .text()
         .replace(/Choose this server/i, "")
@@ -70,7 +69,7 @@ export default async function getAnimeEpisodeInfo(episodeTag) {
       // Episode link (relative URL)
       const href = ($link.attr("href") || "").trim();
       const epName = $link.find(".name").text().trim(); // "EP 7"
-      const epNum = epName.replace(/[^0-9]/g, ""); 
+      const epNum = epName.replace(/[^0-9]/g, "");
 
       const subOrDub = $link.find(".cate").text().trim();
 
@@ -98,9 +97,3 @@ export default async function getAnimeEpisodeInfo(episodeTag) {
     }
   }
 }
-
-// console.log(
-//   await scrapeAnimeEpisodePage(
-//     "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su-2nd-season-episode-6"
-//   )
-// );
