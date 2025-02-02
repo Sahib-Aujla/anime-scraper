@@ -9,18 +9,16 @@ export default async function getAnimeDetails(animeName) {
   let browser;
   try {
     browser = await puppeteer.launch({
-      headless: "new", 
+      headless: "new",
     });
 
     const page = await browser.newPage();
 
-    
     const url = `${base_url}/category/${animeName}`;
     await page.goto(url, {
-      waitUntil: "networkidle2", 
+      waitUntil: "networkidle2",
     });
 
-   
     await page.waitForSelector("div#load_ep ul#episode_related li", {
       timeout: 1000,
     });
@@ -112,11 +110,3 @@ export default async function getAnimeDetails(animeName) {
     }
   }
 }
-
-// Test call
-
-// console.log(
-//   await getAnimeDetailsPuppeteer(
-//     "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su"
-//   )
-// );
